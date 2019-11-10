@@ -34,19 +34,18 @@ public function getSubscribe(){
 }
 
 public function login($username, $password){
-       $query = $this->db->query("select `id`, `name`, `email`, `phone`, `accesslevel`, `status`, `billingaddress`, `billingcity`, `billingstate`, `billingcountry`, `shippingaddress`, `shippingcity`, `shippingcountry`, `shippingstate`, `shippingpincode`, `currency`, `companyname`, `companyregistrationno`, `vatnumber`, `country`, `fax`, `image`, `socialid`, `logintype`, `dob`, `street`, `address`, `city`, `state`, `pincode`, `facebook`, `google`, `twitter`, `timestamp`, `username`, `gender`, `billingpincode` FROM `user` WHERE  username='$username' and password='$password'");
-       $obj = new stdClass();
-       if($query->num_rows() > 0){
-        $obj->value = true;
-        $obj->data = $query->result_array()[0];
-        return $obj ;
-       }else{
-        $obj->value = false;
-        $obj->data = [];
-        $obj->message ="Invalid Username/Password" ;
-        return $obj ;
-       }
-   
+  $query = $this->db->query("select `id`, `first_name`, `last_name`, `email`, `phone`, `username`, `accesslevel`, `status`, `billing_address`, `billing_city`, `billing_state`, `billing_country`, `billing_pincode`, `shipping_address`, `shipping_city`, `shipping_country`, `shipping_state`, `shipping_pincode`, `currency`, `country`, `image`, `socialid`, `logintype`, `dob`, `pincode`, `facebook`, `google`, `twitter`, `timestamp`, `gender` FROM `user` WHERE username='$username' and password='$password'");
+  $obj = new stdClass();
+  if($query->num_rows() > 0){
+   $obj->value = true;
+   $obj->data = $query->result_array()[0];
+   return $obj ;
+  }else{
+   $obj->value = false;
+   $obj->data = [];
+   $obj->message ="Invalid Username/Password" ;
+   return $obj ;
+  }
 }
 
 public function register($name,$email,$username){

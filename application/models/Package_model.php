@@ -8,7 +8,11 @@
 
 
       public function getAllPackages(){
-        $query = $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE p.flag=1 ORDER BY p.sortOrder");
+        if($this->session->userData && $this->session->userData->data['accesslevel']==1){
+          $query = $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE 1 ORDER BY p.sortOrder");
+        }else{
+          $query = $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE p.flag=1 ORDER BY p.sortOrder");
+        }
         $obj = new stdClass();
         if (!$query){
           $obj->value = false;
