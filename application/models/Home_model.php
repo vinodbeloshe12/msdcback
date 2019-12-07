@@ -28,8 +28,9 @@ class Home_model extends CI_model{
       }
 
       public function getHome(){
-        $packages= $this->db->query("SELECT `id`, `title`, `web_title`, `name`, `location`, `price`, `duration`, `image` FROM `package` WHERE flag=1 AND type=1 ORDER BY sortOrder LIMIT 0,6");
+        $packages= $this->db->query("SELECT `id`, `title`, `web_title`, `name`, `location`, `price`, `duration`, `image` FROM `package` WHERE flag=1 AND type=1 ORDER BY sortOrder LIMIT 0,20");
         $activities= $this->db->query("SELECT `id`, `name`, `banner_image`,`price`, `image` FROM `activity` WHERE flag=1 ORDER BY sortOrder limit 5");
+        $tourist_points= $this->db->query("SELECT `id`, `title`, `web_title`,`meta_description`,`image` FROM `tourist_point` WHERE status=1 limit 4");
         $obj = new stdClass();
         if(!$packages){
           $obj->value = false;
@@ -39,6 +40,7 @@ class Home_model extends CI_model{
           $obj->value = true;
           $obj->packages = $packages->result_array();
           $obj->activities = $activities->result_array();
+          $obj->tourist_points = $tourist_points->result_array();
          return $obj ;
         }
        }
@@ -71,6 +73,26 @@ class Home_model extends CI_model{
           $obj->data = $query->result_array();
          return $obj ;
         }
+       }
+
+       public function bookNow($data){
+        $insertData=array("name" => $data['name'],"package_name" => $data['package_name'],"phone" =>  $data['phone'],"email" =>  $data['email'],"city" =>  $data['city'],"arrival_date" =>  $data['arrival_date'],"deputure_date" =>  $data['deputure_date'],"adults" =>  $data['adults'],"childrens" =>  $data['childrens'],"min_price" =>  $data['min_price'],"max_price" =>  $data['max_price']);
+        $this->db->insert('enquiry',$insertData);
+        $sendData['data'] = $insertData;
+        $obj = new stdClass();
+        if ($this->db->affected_rows() != 1){
+          $obj->value = false;
+         $obj->message ="Insertion failed" ;
+          return $obj ;
+      
+        }else{
+          $viewcontent = $this->load->view('emailers/enquiry', $sendData, true);
+          $this->email_model->emailer($viewcontent,'New Enquiry - Malvan Tarkarli Tour Planner ','vinodbeloshe12@gmail.com',"Vinod");
+          $obj->value = true;
+          $obj->message ="Record inserted" ;
+          return $obj ;
+        }
+      
        }
 
        public function deleteContact($id){

@@ -132,5 +132,5 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('home_model','email_model','user_model','content_model','package_model');
+$autoload['model'] = array('home_model','email_model','user_model','content_model','package_model','touristpoint_model');
     

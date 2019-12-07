@@ -14,7 +14,7 @@ class email_model extends CI_Model
         $json_string = array(
 
           'to' => array(
-            'makedigitaldesigners@gmail.com', 'makedigitalin@gmail.com'
+            'vinodbeloshe12@gmail.com', 'aqua.yogesh@gmail.com'
           ),
           'category' => 'test_category'
         );
@@ -25,9 +25,9 @@ class email_model extends CI_Model
             'to'        => $toemail,
             'subject'   => $subject,
             'html'      => $htmltext,
-            'text'      => 'Mukesh Jewellers',
-            'from'      => 'info@mukeshjewellers.in',
-            'fromname'      => 'Mukesh Jewellers',
+            'text'      => 'Malvan Tarkarli Tour Planner',
+            'from'      => 'info@malvantarkarlitourplanner.com',
+            'fromname'      => 'Malvan Tarkarli Tour Planner',
           );
 
           $request =  $url.'api/mail.send.json';
@@ -54,7 +54,7 @@ class email_model extends CI_Model
 
         // print everything out
         ////var_dump($response,curl_error($session),curl_getinfo($session));
-    //    print_r($response);
+      //  print_r($response);
         curl_close($session);
   }
 
