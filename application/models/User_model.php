@@ -81,5 +81,22 @@ class User_model extends CI_model{
         }
         }
 
+
+        public function checkOTP($mobile,$passwrod){
+          $q="select * from user where phone='$mobile' and password='$passwrod'";
+          // echo"@@@".$q;
+          $query = $this->db->query($q);
+          $obj = new stdClass();
+          if($query->num_rows() > 0){
+            $obj->value = true;
+            $obj->data=$query->row();
+            $obj->message ="OTP verified!" ;
+            return $obj ;
+          }else{
+            $obj->value = false;
+            return $obj ;
+           }
+          }
+
 }
 ?>

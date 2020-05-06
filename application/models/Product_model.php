@@ -1,5 +1,5 @@
 <?php
-  class Package_model extends CI_Model {
+  class Product_model extends CI_Model {
 
     public function __construct(){
        $this->load->database();
@@ -7,11 +7,11 @@
 
 
 
-      public function getAllPackages(){
-        if($this->session->userData && $this->session->userData->data['accesslevel']==1){
-          $query = $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE 1 ORDER BY p.sortOrder");
+      public function getAllProducts($lang){
+        if($lang=="en"){
+          $query = $this->db->query("SELECT `id`, `name_english` as 'name', `description_hindi` as 'description', `image`, `price`, `price_per`, `discount_price`, `unit_english` as 'unit',`discount`, `quantity`, `status`, `category` FROM `product` WHERE 1 AND status=1");
         }else{
-          $query = $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE p.flag=1 ORDER BY p.sortOrder");
+          $query = $this->db->query("SELECT `id`, `name_marathi`as 'name', `description_marathi` as 'description', `image`, `price`, `price_per`, `discount_price`, `unit_marathi` as 'unit',`discount`, `quantity`, `status`, `category` FROM `product` WHERE 1 AND status=1");
         }
         $obj = new stdClass();
         if (!$query){

@@ -36,6 +36,53 @@ class Api extends REST_Controller{
      $this->response($result, 200);      
 }
 
+//check OTP
+function checkOTP_post(){
+  $params = json_decode(file_get_contents('php://input'), TRUE);
+    // print_r($params);
+     $mobile= $params['mobileno'];
+     $password= $params['password'];
+  $result = $this->user_model->checkOTP($mobile,$password);
+  $this->response($result, 200); 
+
+}
+
+
+// get all product list
+function getAllProducts_get(){
+  $lang='ma';
+  $result = $this->product_model->getAllProducts($lang);
+  $this->response($result, 200); 
+}
   
+//add to cart 
+public function addToCart_post(){
+  $params = json_decode(file_get_contents('php://input'), TRUE);
+  $data = array(
+      'product_id'=>$params['product_id'],
+      'quantity'=>$params['quantity'] ,      
+      'user_id'=>$params['user_id'] 
+  );
+       $result = $this->cart_model->addToCart($data);
+      $this->response($result, 200); 
+ }
+
+ //get cart
+public function getCart_post(){
+  $params = json_decode(file_get_contents('php://input'), TRUE);
+  $lang=$params['language'];
+  $user=$params['user_id'];
+  $result = $this->cart_model->getCart($lang,$user);
+  $this->response($result, 200); 
+ }
+
+  //delete cart
+public function deleteCart_post(){
+  $params = json_decode(file_get_contents('php://input'), TRUE);
+  $id=$params['id'];
+  $user=$params['user_id'];
+  $result = $this->cart_model->deleteCart($id,$user);
+  $this->response($result, 200); 
+ }
 
 }
