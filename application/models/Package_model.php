@@ -30,7 +30,7 @@
       public function getPackageDetails($name){
         $data = $this->db->query("SELECT `id` FROM `package` WHERE flag=1 and web_title='$name' ")->row();
         $packge_id = $data->id;
-        $query= $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`activities`, p.`inclusions`, p.`thingstocarry`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE p.flag=1 and p.id=$packge_id ORDER BY p.sortOrder");
+        $query= $this->db->query("SELECT p.`id`, p.`title`, p.`web_title`,p.`meta_title`,p.`meta_description`,p.`meta_keywords`, p.`subtitle`, t.`name` as 'type', p.`name`, p.`location`, p.`price`, p.`duration`, p.`description`, p.`banner_image`, p.`sortOrder`, p.`lat`, p.`lang`, p.`activities`, p.`inclusions`, p.`thingstocarry`, p.`flag`, p.`regdate`, p.`user` FROM `package` p LEFT JOIN type t ON p.type=t.id WHERE p.flag=1 and p.id=$packge_id ORDER BY p.sortOrder");
          $images=$this->db->query("SELECT * FROM `package_images` WHERE package_id=$packge_id");
         if($images->num_rows() == 0){
            $gallery=$this->db->query("SELECT * FROM `gallery`")->result_array();
